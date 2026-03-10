@@ -1,11 +1,12 @@
 import { useEffect, useState } from 'react'
 import './App.css'
 import 'paper-css/paper.min.css';
-import DatePicker from 'react-datepicker'
+// import DatePicker from 'react-datepicker'
 // Date Picker
-// import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
-// import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
-// import { DatePicker } from "@mui/x-date-pickers/DatePicker";
+import { DemoContainer } from '@mui/x-date-pickers/internals/demo';
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
+import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 
 function App() {
 
@@ -13,7 +14,7 @@ function App() {
   const [countryData, setCountryData] = useState([])
   const [selectedYear, setSelectedYear] = useState("")
   const [vacationList, setVacationList] = useState([])
-  // const [showCalendar, setShowCalendar] = useState(false)
+
 
   // API importing data
 
@@ -39,7 +40,8 @@ function App() {
 useEffect(() => {
   const fetchHolidays = async () => {
     try {
-      const response = await fetch (`https://date.nager.at/api/v3/PublicHolidays/${selectedYear}/${selectedCountry}`)
+      // change when using selecting date to `https://date.nager.at/api/v3/PublicHolidays/${selectedYear}/${selectedCountry}
+      const response = await fetch (`https://date.nager.at/api/v3/PublicHolidays/2026/${selectedCountry}`)
       const data = await response.json()
       setVacationList(data)
       console.log(data)
@@ -54,19 +56,12 @@ useEffect(() => {
 
   return (  
     <>
-            {/* <LocalizationProvider dateAdapter={AdapterDayjs}>
-      <DatePicker
-        label="Select Date"
-        openTo="year"
-        views={["year", "month", "day"]}
-        value={value}
-        onChange={(newValue) => setValue(newValue)}
-      />
-    </LocalizationProvider> */}
+
+
         <h1 style={{width : '80%'}}>Public holidays app</h1>
         
         {/* Selecting Country */}
-        <select style={{width : '50%'}} id="options" value={selectedCountry} onChange={(e) => setselectedCountry(e.target.value)}>
+        <select style={{width : '35%'}} id="options" value={selectedCountry} onChange={(e) => setselectedCountry(e.target.value)}>
           <option  value={""}>-- Select a Country --</option>
           {countryData.map((country) => {
             console.log(selectedCountry)
@@ -75,14 +70,28 @@ useEffect(() => {
         </select>
           
         {/* Selecting Year */}
-          <DatePicker
+          {/* <LocalizationProvider dateAdapter={AdapterDayjs}>
+            <DemoContainer components={['DatePicker', 'DatePicker']}>
+              <DatePicker 
+                openTo="year"
+                label={'"year"'} 
+                selected={selectedYear}
+                onChange={(date) => setSelectedYear(date)}
+                showYearPicker
+                dateFormat={"yyyy"}
+                format="YYYY" 
+                />
+            </DemoContainer>
+          </LocalizationProvider> */}
+
+          {/* <DatePicker
             selected={selectedYear}
             onChange={(date) => setSelectedYear(date.getFullYear())}
             showYearPicker
             dateFormat={"yyyy"}
             className="my-custom-input"
             
-          />
+          /> */}
 
           {/* Vacations list */}
           <div >
