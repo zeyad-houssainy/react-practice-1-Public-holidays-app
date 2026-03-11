@@ -63,7 +63,7 @@ function App() {
         {countryData.map((country) => {
           return (
             <option key={country.countryCode} value={country.countryCode}>
-              {country.name}
+              <strong>{country.name}</strong>
             </option>
           )
         })}
